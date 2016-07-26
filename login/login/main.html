@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>录入页面</title>
+    <link href="Styles/bootstrap.min.css" rel="stylesheet">
+    <script src="Scripts/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.json.min.js" type="text/javascript"></script>
+    <style>
+        .left{
+            margin-top: 20px;
+            width:600px;
+        }
+        .right{
+            width:500px;
+        }
+    </style>
+
+</head>
+<body>
+<div align="left" class="left">
+    <table class="table" >
+        <caption style="font-size: larger">录入信息</caption>
+        <tr class="active">
+            <th>姓名</th>
+            <th><input type="text" id="name"></th>
+        </tr>
+        <tr class="success">
+            <th>电话号码</th>
+            <th><input type="text" id="number"></th>
+        </tr>
+        <tr class="waring">
+            <th>服用产品</th>
+            <th><input type="text" id="product"></th>
+        </tr>
+        <tr>
+            <th>
+                <button class=".btn btn-success" id="save">保存</button>
+            </th>
+            <th></th>
+
+        </tr>
+
+    </table>
+</div>
+<hr style="background-color: blue;height: 2px;border:none">
+<div align="right"  class="right">
+    <table class="table" id="table" >
+        <caption style="font-size: larger">查询信息</caption>
+        <tr class="active">
+            <th>姓名</th>
+            <th><input type="text" id="findName"></th>
+        </tr>
+        <tr>
+            <th>
+                <button class=".btn btn-success" id="find">查找</button>
+            </th>
+            <th></th>
+
+        </tr>
+        <tbody style="background-color:Red"></tbody>
+
+    </table>
+</div>
+<script>
+    $("#save").click(function () {
+        var Name = document.getElementById("name").value;
+        var Number = document.getElementById("number").value;
+        var Product = document.getElementById("product").value;
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            data: { "option": "infomation", "name": Name, "number": Number, "product": Product },
+            url: 'LoginHandler.ashx',
+            success: function (res) {
+                alert(res);
+                console.log(res);
+
+            },
+            error: function () {
+                console.log("失败");
+            }
+
+        });
+    });
+    $("#find").click(function () {
+        var name = document.getElementById("findName").value;
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: { "option": "find", "name": name },
+            url: 'LoginHandler.ashx',
+            success: function (res) {
+                var pos = $("#table tr").length - 1;
+                if (res!="无相关记录") {
+                    for (var i = 0; i < res.length; i++) {
+                        var tr = '<tr class="success"><th>' + res[i].Name + '</th><th>' + res[i].Number + '</th></tr>';
+                        $("#table tr").eq(pos).after(tr);
+                    }
+                }
+                else {
+                    alert(res);
+                }
+
+            }
+
+        });
+
+    });
+</script>
+
+
+
+
+</body>
+</html>

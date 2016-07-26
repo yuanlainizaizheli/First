@@ -1,0 +1,7 @@
+D:\vs练习\login\login\bin\login.dll
+D:\vs练习\login\login\bin\login.pdb
+D:\vs练习\login\login\bin\AjaxPro.2.dll
+D:\vs练习\login\login\bin\Newtonsoft.Json.dll
+D:\vs练习\login\login\bin\Newtonsoft.Json.xml
+D:\vs练习\login\login\obj\Debug\login.dll
+D:\vs练习\login\login\obj\Debug\login.pdb
